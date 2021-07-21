@@ -1,0 +1,12 @@
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.csprojAssemblyReference.cache
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.AssemblyInfoInputs.cache
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.AssemblyInfo.cs
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.csproj.CoreCompileInputs.cache
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\bin\Debug\netcoreapp3.1\BookStoreRL.deps.json
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\bin\Debug\netcoreapp3.1\BookStoreRL.dll
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\bin\Debug\netcoreapp3.1\BookStoreRL.pdb
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\bin\Debug\netcoreapp3.1\BookStoreCommonLayer.dll
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\bin\Debug\netcoreapp3.1\BookStoreCommonLayer.pdb
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.csproj.CopyComplete
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.dll
+C:\Users\kholi\source\repos\BookStore\BookStoreRL\obj\Debug\netcoreapp3.1\BookStoreRL.pdb

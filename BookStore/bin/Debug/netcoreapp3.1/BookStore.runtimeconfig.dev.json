@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\kholi\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\kholi\\.nuget\\packages"
+    ]
+  }
+}

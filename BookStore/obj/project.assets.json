@@ -1,11 +1,66 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "BookStoreBL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "BookStoreRL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BookStoreBL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookStoreBL.dll": {}
+        }
+      },
+      "BookStoreCommonLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/BookStoreCommonLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookStoreCommonLayer.dll": {}
+        }
+      },
+      "BookStoreRL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "BookStoreCommonLayer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BookStoreRL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookStoreRL.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BookStoreBL/1.0.0": {
+      "type": "project",
+      "path": "../BookStoreBL/BookStoreBL.csproj",
+      "msbuildProject": "../BookStoreBL/BookStoreBL.csproj"
+    },
+    "BookStoreCommonLayer/1.0.0": {
+      "type": "project",
+      "path": "../BookStoreCommonLayer/BookStoreCommonLayer.csproj",
+      "msbuildProject": "../BookStoreCommonLayer/BookStoreCommonLayer.csproj"
+    },
+    "BookStoreRL/1.0.0": {
+      "type": "project",
+      "path": "../BookStoreRL/BookStoreRL.csproj",
+      "msbuildProject": "../BookStoreRL/BookStoreRL.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "BookStoreBL >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\kholi\\.nuget\\packages\\": {}
@@ -33,7 +88,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\kholi\\source\\repos\\BookStore\\BookStoreBL\\BookStoreBL.csproj": {
+              "projectPath": "C:\\Users\\kholi\\source\\repos\\BookStore\\BookStoreBL\\BookStoreBL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

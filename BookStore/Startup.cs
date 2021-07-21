@@ -1,3 +1,7 @@
+using BookStoreBL.services;
+using BookStoreBLinterface;
+using BookStoreRL.services;
+using BookStoreRLinterface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,8 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<IUserBL, UserBL>();
+            services.AddTransient<IUserRL, UserRL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
