@@ -7,7 +7,7 @@ namespace BookStoreRLinterface
 {
     public interface IUserRL
       {
-        Users AddUser(Users user);
-        string Login(string email, string password);
+       bool AddUser(Users user);
+        //string Login(string email, string password);
     }
 }

@@ -7,8 +7,8 @@ namespace BookStoreBLinterface
 {
    public interface IUserBL
 {
-        Users AddUser(Users user);
-        string Login(string email, string password);
+        bool AddUser(Users user);
+        //string Login(string email, string password);
     }
 }
 

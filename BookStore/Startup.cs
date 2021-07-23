@@ -32,6 +32,7 @@ namespace BookStore
             services.AddControllers();
             services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IUserRL, UserRL>();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +46,11 @@ namespace BookStore
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(options =>
+            options.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 

@@ -15,16 +15,16 @@ namespace BookStoreBL.services
         {
             this.userRl = userRl;
         }
-        public Users AddUser(Users user)
+        public bool AddUser(Users user)
         {
-            this.userRl.AddUser(user);
-            return user;
+            return this.userRl.AddUser(user);
+            
         }
 
 
-        public string Login(string email, string password)
-        {
-            return this.userRl.Login(email, password);
-        }
+        //public string Login(string email, string password)
+        //{
+        //    return this.userRl.Login(email, password);
+        //}
     }
 }
