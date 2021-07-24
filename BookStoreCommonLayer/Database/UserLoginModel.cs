@@ -6,8 +6,8 @@ namespace BookStoreCommonLayer.Database
 {
    public class UserLoginModel
     {
-        public string UserEmail { get; set; }
+        public string EmailId { get; set; }
 
-        public string UserPassword { get; set; }
+        public string Password { get; set; }
     }
 }

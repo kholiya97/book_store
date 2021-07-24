@@ -2,11 +2,12 @@
 using BookStoreRLinterface;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 
 namespace BookStoreRL.services
 {
@@ -51,49 +52,121 @@ namespace BookStoreRL.services
             }
             return false;
         }
-        //        public string Login(string email, string password)
+        public string Login(string email, string password)
+        {
+
+            this.connection.Open();
+            using (this.connection)
+            {
+
+                SqlDataAdapter sda = new SqlDataAdapter("SELECT count(*) FROM Users WHERE EmailId='" + email + "'AND Password='" + password + "'", connection);
+                DataTable dt = new DataTable();
+
+                sda.Fill(dt);
+                if (dt.Rows.Count >= 1)
+                {
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var tokenKey = Encoding.ASCII.GetBytes("ilovecodingilovecodingilovecoding");
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                {
+                   new Claim("Email",email)
+                    //new Claim("UserID",result.UserId.ToString()),
+
+                }),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    return tokenHandler.WriteToken(token);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+        }
+        //public bool ForgotPassword(string email)
+        //{
+        //    try
+        //    {
+        //        var result = _userDBContext.Users.FirstOrDefault(u => u.Email == email);
+        //        if (result == null)
         //        {
-        //            var result = "";
-        //            this.connection.Open();
-        //            using (this.connection)
-        //            {
-        //                string query = @"Select * from RegisterUser;";
+        //            return false;
+        //        }
+        //        MessageQueue queue;
 
-        //                else
-        //                {
-        //                    System.Console.WriteLine("No data found");
-        //                }
-
-
-        //            }
-        //            if (result == email)
-        //            {
-        //                var tokenHandler = new JwtSecurityTokenHandler();
-        //                var tokenKey = Encoding.ASCII.GetBytes("ilovecodingilovecodingilovecoding");
-        //                var tokenDescriptor = new SecurityTokenDescriptor
-        //                {
-        //                    Subject = new ClaimsIdentity(new Claim[]
-        //                    {
-        //                   new Claim("Email",email),
-        //                        //new Claim("UserID",result.UserId.ToString()),
-
-        //                    }),
-        //                    Expires = DateTime.UtcNow.AddDays(7),
-        //                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
-        //                };
-        //                var token = tokenHandler.CreateToken(tokenDescriptor);
-        //                return tokenHandler.WriteToken(token);
-        //            }
-        //            else
-        //            {
-        //                return null;
-        //            }
-
+        //        // Message Queue 
+        //        if (MessageQueue.Exists(@".\Private$\FundooApplicationQueue"))
+        //        {
+        //            queue = new MessageQueue(@".\Private$\FundooApplicationQueue");
+        //        }
+        //        else
+        //        {
+        //            queue = MessageQueue.Create(@".\Private$\FundooApplicationQueue");
         //        }
 
+        //        Message MyMessage = new Message();
+        //        MyMessage.Formatter = new BinaryMessageFormatter();
+        //        MyMessage.Body = email;
+        //        MyMessage.Label = "Forget Password Email Fundoo Application";
+        //        queue.Send(MyMessage);
+        //        Message msg = queue.Receive();
+        //        msg.Formatter = new BinaryMessageFormatter();
+        //        EmailService.SendEmail(msg.Body.ToString(), GenerateToken(msg.Body.ToString()));
+        //        queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReceiveCompleted);
+        //        queue.BeginReceive();
+        //        queue.Close();
+        //        return true;
         //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
+
+        //private void msmqQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
+        //{
+
+        //    MessageQueue queue = (MessageQueue)sender;
+        //    Message msg = queue.EndReceive(e.AsyncResult);
+        //    EmailService.SendEmail(e.Message.ToString(), GenerateToken(e.Message.ToString()));
+        //    queue.BeginReceive();
+
+
+        //}
+        //// Generate Token
+        //public string GenerateToken(string email)
+        //{
+        //    if (email == null)
+        //    {
+        //        return null;
+        //    }
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var tokenKey = Encoding.ASCII.GetBytes("THIS_IS_MY_KEY_TO_GENERATE_TOKEN");
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new Claim[]
+        //        {
+        //            new Claim("Email",email)
+        //        }),
+        //        Expires = DateTime.UtcNow.AddHours(1),
+        //        SigningCredentials =
+        //        new SigningCredentials(
+        //            new SymmetricSecurityKey(tokenKey),
+        //            SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
+
+
     }
 }
+
 
 
 

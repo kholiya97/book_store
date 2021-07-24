@@ -18,13 +18,25 @@ namespace BookStoreBL.services
         public bool AddUser(Users user)
         {
             return this.userRl.AddUser(user);
-            
+
         }
 
 
-        //public string Login(string email, string password)
+        public string Login(string email, string password)
+        {
+            return this.userRl.Login(email, password);
+        }
+        //public bool ForgotPassword(string email)
         //{
-        //    return this.userRl.Login(email, password);
+        //    try
+        //    {
+        //        return this.userRl.ForgotPassword(email);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
         //}
+
     }
 }

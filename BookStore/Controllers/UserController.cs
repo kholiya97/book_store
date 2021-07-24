@@ -34,5 +34,27 @@ namespace BookStore.Controllers
                 return this.BadRequest(new { success = false, message = e.Message });
             }
         }
+
+        [HttpPost("login")]
+        public IActionResult LoginUser(UserLoginModel UserloginModel)
+        {
+            try
+            {
+                var token = this.userBl.Login(UserloginModel.EmailId, UserloginModel.Password);
+                if (token == null)
+                    return Unauthorized();
+                return this.Ok(new { token = token, success = true, message = "Token Generated Successfull" });
+
+            }
+            catch (Exception e)
+            {
+
+
+                return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
     }
 }
+
+
+
