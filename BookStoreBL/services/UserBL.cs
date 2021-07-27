@@ -26,17 +26,17 @@ namespace BookStoreBL.services
         {
             return this.userRl.Login(email, password);
         }
-        //public bool ForgotPassword(string email)
-        //{
-        //    try
-        //    {
-        //        return this.userRl.ForgotPassword(email);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
+        public bool ForgotPassword(string email)
+        {
+            try
+            {
+                return this.userRl.ForgotPassword(email);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
     }
 }

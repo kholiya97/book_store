@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "Experimental.System.Messaging/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Experimental.System.Messaging.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Experimental.System.Messaging.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Cors/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -391,6 +400,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "BookStoreRL": "1.0.0",
+          "Experimental.System.Messaging": "1.1.0",
           "Microsoft.AspNetCore.Cors": "2.2.0"
         },
         "compile": {
@@ -404,6 +414,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Experimental.System.Messaging": "1.1.0",
           "Microsoft.AspNetCore.Cors": "2.2.0"
         },
         "compile": {
@@ -418,6 +429,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "BookStoreCommonLayer": "1.0.0",
+          "Experimental.System.Messaging": "1.1.0",
           "Microsoft.AspNetCore.Cors": "2.2.0",
           "Microsoft.IdentityModel.Tokens": "6.12.0",
           "System.Data.SqlClient": "4.8.2",
@@ -433,6 +445,20 @@
     }
   },
   "libraries": {
+    "Experimental.System.Messaging/1.1.0": {
+      "sha512": "vub7Mtt2WFdFKTZKECVuZx6feP5kUpS9EfVy+Yu4GDfdlMwivRdX4TbdkDYS2lKqCjqzUbnxTbJei1IOqC+CnA==",
+      "type": "package",
+      "path": "experimental.system.messaging/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "experimental.system.messaging.1.1.0.nupkg.sha512",
+        "experimental.system.messaging.nuspec",
+        "lib/netstandard2.0/Experimental.System.Messaging.dll",
+        "lib/netstandard2.0/Experimental.System.Messaging.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Cors/2.2.0": {
       "sha512": "LFlTM3ThS3ZCILuKnjy8HyK9/IlDh3opogdbCVx6tMGyDzTQBgMPXLjGDLtMk5QmLDCcP3l1TO3z/+1viA8GUg==",
       "type": "package",
@@ -1302,6 +1328,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "BookStoreBL >= 1.0.0",
+      "Experimental.System.Messaging >= 1.1.0",
       "Microsoft.AspNetCore.Cors >= 2.2.0"
     ]
   },
@@ -1348,6 +1375,10 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "Experimental.System.Messaging": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
           "Microsoft.AspNetCore.Cors": {
             "target": "Package",
             "version": "[2.2.0, )"

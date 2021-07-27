@@ -1,10 +1,13 @@
 ﻿using BookStoreCommonLayer.Database;
 using BookStoreRLinterface;
+using Experimental.System.Messaging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -88,56 +91,70 @@ namespace BookStoreRL.services
             }
 
         }
-        //public bool ForgotPassword(string email)
-        //{
-        //    try
-        //    {
-        //        var result = _userDBContext.Users.FirstOrDefault(u => u.Email == email);
-        //        if (result == null)
-        //        {
-        //            return false;
-        //        }
-        //        MessageQueue queue;
 
-        //        // Message Queue 
-        //        if (MessageQueue.Exists(@".\Private$\FundooApplicationQueue"))
-        //        {
-        //            queue = new MessageQueue(@".\Private$\FundooApplicationQueue");
-        //        }
-        //        else
-        //        {
-        //            queue = MessageQueue.Create(@".\Private$\FundooApplicationQueue");
-        //        }
+        public bool ForgotPassword(string email)
+        {
+            this.connection.Open();
+            using (this.connection)
+            {
 
-        //        Message MyMessage = new Message();
-        //        MyMessage.Formatter = new BinaryMessageFormatter();
-        //        MyMessage.Body = email;
-        //        MyMessage.Label = "Forget Password Email Fundoo Application";
-        //        queue.Send(MyMessage);
-        //        Message msg = queue.Receive();
-        //        msg.Formatter = new BinaryMessageFormatter();
-        //        EmailService.SendEmail(msg.Body.ToString(), GenerateToken(msg.Body.ToString()));
-        //        queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReceiveCompleted);
-        //        queue.BeginReceive();
-        //        queue.Close();
-        //        return true;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
+                SqlDataAdapter sda = new SqlDataAdapter("SELECT count(*) FROM Users WHERE EmailId= '" + email + "'", connection);   
+                DataTable dt = new DataTable();
 
-        //private void msmqQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
-        //{
+                sda.Fill(dt);
+                if (dt.Rows.Count >= 1)
+                {
+                      MessageQueue queue;
 
-        //    MessageQueue queue = (MessageQueue)sender;
-        //    Message msg = queue.EndReceive(e.AsyncResult);
-        //    EmailService.SendEmail(e.Message.ToString(), GenerateToken(e.Message.ToString()));
-        //    queue.BeginReceive();
+                   
+                    if (MessageQueue.Exists(@".\Private$\BookStoreApplicationQueue"))
+                    {
+                        queue = new MessageQueue(@".\Private$\BookStoreApplicationQueue");
+                    }
+                    else
+                    {
+                        queue = MessageQueue.Create(@".\Private$\BookStoreApplicationQueue");
+                    }
 
+                    Message MyMessage = new Message();
+                    MyMessage.Formatter = new BinaryMessageFormatter();
+                    MyMessage.Body = email;
+                    MyMessage.Label = "Forget Password Email BookStore Application";
+                    queue.Send(MyMessage);
+                    Message msg = queue.Receive();
+                    msg.Formatter = new BinaryMessageFormatter();
+                    EmailService.SendEmail(msg.Body.ToString(), GenerateToken(msg.Body.ToString()));
+                    queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReceiveCompleted);
+                    queue.BeginReceive();
+                    queue.Close();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        private void msmqQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
+        {
+            try
+            {
+                MessageQueue queue = (MessageQueue)sender;
+                Message msg = queue.EndReceive(e.AsyncResult);
+                EmailService.SendEmail(e.Message.ToString(), GenerateToken(e.Message.ToString()));
+                queue.BeginReceive();
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException(ex.Message);
+            }
+        }
 
-        //}
+        private string GenerateToken(object p)
+        {
+            throw new NotImplementedException();
+        }
+
         //// Generate Token
         //public string GenerateToken(string email)
         //{
@@ -151,7 +168,7 @@ namespace BookStoreRL.services
         //    {
         //        Subject = new ClaimsIdentity(new Claim[]
         //        {
-        //            new Claim("Email",email)
+        //                new Claim("Email",email)
         //        }),
         //        Expires = DateTime.UtcNow.AddHours(1),
         //        SigningCredentials =
@@ -165,7 +182,14 @@ namespace BookStoreRL.services
 
 
     }
+
+
+    
+    
+
+
 }
+
 
 
 

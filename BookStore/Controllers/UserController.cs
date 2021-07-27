@@ -53,6 +53,22 @@ namespace BookStore.Controllers
                 return this.BadRequest(new { success = false, message = e.Message });
             }
         }
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public ActionResult ForgotPassword(Users user)
+        {
+            try
+            {
+                bool isExist = this.userBl.ForgotPassword(user.EmailId);
+                if (isExist) return Ok(new { success = true, message = $"Reset Link sent to {user.EmailId}" });
+                else return BadRequest(new { success = false, message = $"No user Exist with {user.EmailId}" });
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
 
