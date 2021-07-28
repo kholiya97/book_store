@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using RepositoryLayer.Implimentation;
+using RepositoryLayer.Interface;
+using ServiceLayer.Implimentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,39 +38,42 @@ namespace BookStore
             services.AddTransient<IUserRL, UserRL>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookService, BookService>();
-            //services.AddSwaggerGen(); //swagger   
+            services.AddTransient< ICartRepository, CartRepository>();
+            services.AddTransient<ICartService, CartService>();
+
+            services.AddSwaggerGen(); //swagger   
 
 
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fundoo API", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        Name = "Authorization",
-            //        Type = SecuritySchemeType.ApiKey,
-            //        Scheme = "Bearer",
-            //        BearerFormat = "JWT",
-            //        In = ParameterLocation.Header,
-            //        Description = "Write Bearer space & paste your token"
-            //    });
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //    {
-            //        {
-            //              new OpenApiSecurityScheme
-            //                {
-            //                    Reference = new OpenApiReference
-            //                    {
-            //                        Type = ReferenceType.SecurityScheme,
-            //                        Id = "Bearer"
-            //                    }
-            //                },
-            //                new string[] {}
+            services.AddSwaggerGen(c =>
+            {
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fundoo API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Write Bearer space & paste your token"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
 
-            //        }
-            //    });
-            //});
+                    }
+                });
+            });
             services.AddCors();
         }
 
@@ -77,12 +84,12 @@ namespace BookStore
             {
                 app.UseDeveloperExceptionPage();
             }
-            ////SWAGGER MIDDLEWARE
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FundooApplication API v1");
-            //});
+            //SWAGGER MIDDLEWARE
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FundooApplication API v1");
+            });
 
             app.UseHttpsRedirection();
 

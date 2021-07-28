@@ -1,4 +1,5 @@
-﻿using BookStoreBLinterface;
+﻿using BookStoreBL.services;
+using BookStoreBLinterface;
 using BookStoreCommonLayer.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,7 +58,8 @@ namespace BookStore.Controllers
         public IActionResult updateBook(int id, [FromBody] BookProduct book)
         {
             List<BookProduct> result = _service.updateBook(id, book);
-            return Ok(new  { StatusCode = (int)HttpStatusCode.OK, Message = "successful", Data = result });
+            return Ok(new response<List<BookProduct>> { StatusCode = (int)HttpStatusCode.OK, Message = "successful", Data = result });
+
         }
 
     }
